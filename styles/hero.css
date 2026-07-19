@@ -1,0 +1,191 @@
+/* ── Hero ──────────────────────────────────────────────────── */
+
+.hero {
+  position: relative;
+  height: 100vh;
+  min-height: 560px;
+  width: 100%;
+  overflow: hidden;
+  background: var(--paper-dim);
+}
+
+#marble-canvas {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  cursor: default;
+  filter: saturate(1.05);
+  pointer-events: none;
+  opacity: 0;
+  transform: scale(1.06);
+  animation: canvasIn 1.4s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+}
+
+#marble-canvas canvas {
+  display: block;
+  width: 100% !important;
+  height: 100% !important;
+  pointer-events: auto;
+}
+
+@keyframes canvasIn {
+  to { opacity: 1; transform: scale(1); }
+}
+
+/* ── Glow / Scrim ──────────────────────────────────────────── */
+
+.hero__glow {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  mix-blend-mode: soft-light;
+  background: radial-gradient(
+    480px circle at var(--pointer-x) var(--pointer-y),
+    rgba(255, 255, 255, 0.55),
+    transparent 70%
+  );
+  transition: background-position 0.05s linear;
+}
+
+.hero__scrim {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(
+    180deg,
+    rgba(22, 21, 19, 0.38) 0%,
+    rgba(22, 21, 19, 0.08) 24%,
+    rgba(22, 21, 19, 0.1) 70%,
+    rgba(22, 21, 19, 0.42) 100%
+  );
+}
+
+/* ── Tagline ───────────────────────────────────────────────── */
+
+.hero__tagline {
+  position: absolute;
+  top: calc(50% + 18.5rem);
+  left: 50%;
+  z-index: 5;
+  width: min(90vw, 34rem);
+  pointer-events: none;
+  opacity: 0;
+  transform: translate(-50%, 10px);
+  animation: fadeUpIn 1s cubic-bezier(0.16, 1, 0.3, 1) 1s forwards;
+}
+
+@keyframes fadeUpIn {
+  to { opacity: 1; transform: translate(-50%, 0); }
+}
+
+/* ── Name ──────────────────────────────────────────────────── */
+
+.hero__name {
+  position: absolute;
+  inset: 0;
+  z-index: 4;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 0 clamp(1rem, 4vw, 3rem);
+  pointer-events: none;
+  background: radial-gradient(
+    ellipse 70% 55% at 50% 50%,
+    rgba(22, 21, 19, 0.32),
+    transparent 75%
+  );
+}
+
+.hero__name h1 {
+  font-family: var(--font-display);
+  font-weight: 700; /* bold needed so the thick outline doesn't eat the letterforms */
+  color: #fff;
+  text-align: center;
+  line-height: 0.86;
+  margin: 0;
+  font-size: clamp(3.2rem, min(16vw, 19vh), 13rem);
+  letter-spacing: 0.01em;
+  opacity: 0;
+  filter: blur(14px);
+  transform: translateY(28px) rotate(-1.5deg);
+  animation: nameIn 1.3s cubic-bezier(0.16, 1, 0.3, 1) 0.35s forwards;
+
+  /* ── thick black marker/stencil outline — the graffiti-tag look ── */
+  -webkit-text-stroke: 3px #0a0a0a;
+  paint-order: stroke fill;
+
+  text-shadow:
+    /* black outline reinforcement at the corners, keeps curves clean */
+    -2px -2px 0 #0a0a0a,
+     2px -2px 0 #0a0a0a,
+    -2px  2px 0 #0a0a0a,
+     2px  2px 0 #0a0a0a,
+
+    /* hard-edged black drop — flat, no blur, reads as a sprayed/stencilled tag */
+    5px 5px 0 #0a0a0a,
+    9px 9px 0 #0a0a0a,
+
+    /* yellow accent offset — the one pop of color, peeking out past the black */
+    13px 13px 0 #ffe000,
+    14px 14px 0 #ffe000,
+
+    /* soft ambient glow, still yellow-toned, keeps it from going flat/matte */
+    0 0 40px rgba(255, 230, 0, 0.35),
+    0 12px 60px rgba(0, 0, 0, 0.55);
+}
+
+@keyframes nameIn {
+  to {
+    opacity: 1;
+    filter: blur(0);
+    transform: translateY(0) rotate(-1.5deg);
+  }
+}
+
+
+
+.hero__name h1 span {
+  display: block;
+}
+
+
+/* ── Mobile tweaks ─────────────────────────────────────────── */
+
+@media (max-width: 640px) {
+  .hero__nav { top: calc(50% + clamp(3.4rem, 14vw, 5rem)); transform: translateX(-50%) translateY(10px) scale(1); }
+  .hero__tagline { top: calc(50% + 7.4rem); width: min(90vw, 24rem); }
+}
+
+/* ─── Add to hero.css ───────────────────────────────────────────
+   Additive only — doesn't touch your existing hero rules.
+   ------------------------------------------------------------------ */
+
+/* Required for the curtain effect: the hero has to stay pinned to the
+   viewport while .about scrolls up and over it, rather than scrolling
+   away normally. */
+.hero{
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    overflow: hidden;
+    z-index: 0 !important;
+}
+
+main {
+    position: relative;
+    z-index: 1 !important;
+}
+
+/* JS drives these every frame via transform/filter — flag them for
+   GPU compositing so the browser doesn't repaint on the main thread. */
+#marble-canvas {
+  will-change: transform, filter;
+}
+
+.hero__name,
+.hero__tagline,
+.hero__scroll {
+  will-change: transform, opacity;
+}

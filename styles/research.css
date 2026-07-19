@@ -1,0 +1,290 @@
+#research {
+    position: relative;
+    z-index: 2;
+    background: var(--paper);
+    color: var(--ink);
+    padding: 6rem 0 8rem;
+    overflow: hidden;
+}
+
+.research {
+    max-width: 1100px;
+    margin: auto;
+    padding: 0 6rem;
+}
+
+.research__header {
+    margin-bottom: 4rem;
+}
+
+.research__hint {
+    opacity: 0.65;
+    margin-top: 0.25rem;
+}
+
+/* ============================================================
+   TIMELINE — the "string" running down the middle
+   ============================================================ */
+.research__timeline {
+    position: relative;
+    padding: 1rem 0;
+}
+
+.research__timeline::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    bottom: 0;
+    left: 50%;
+    border-left: 2px dashed var(--ink);
+    opacity: 0.3;
+    transform: translateX(-50%);
+}
+
+/* ============================================================
+   ENTRY — outer element handles scroll-reveal + positioning,
+   inner .research__card handles the idle sway, so the two
+   transforms never fight each other.
+   ============================================================ */
+.research__entry {
+    --delay: 0ms;
+    position: relative;
+    display: flex;
+    margin-bottom: 5rem;
+    opacity: 0;
+    transform: translateY(2.5vw);
+    transition: opacity 0.7s ease var(--delay),
+                transform 0.7s cubic-bezier(0.22, 1, 0.36, 1) var(--delay);
+}
+
+.research__entry.visible {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.research__entry:nth-child(odd) {
+    justify-content: flex-start;
+}
+
+.research__entry:nth-child(even) {
+    justify-content: flex-end;
+}
+
+.research__entry:last-child {
+    margin-bottom: 0;
+}
+
+/* year badge, sitting right on the string */
+.research__year-badge {
+    position: absolute;
+    top: 0.25rem;
+    left: 50%;
+    transform: translateX(-50%);
+    z-index: 3;
+    font-family: 'Short Stack', cursive;
+    font-size: 0.8rem;
+    background: var(--paper);
+    border: 1.5px dashed var(--ink);
+    border-radius: 999px;
+    padding: 0.3rem 0.75rem;
+    white-space: nowrap;
+}
+
+/* ---- card ---- */
+.research__card {
+    --sway: 0deg;
+    width: 44%;
+    position: relative;
+    margin-top: 2.5rem;
+    background: var(--paper);
+    border: 1.5px dashed var(--ink);
+    border-radius: 14px;
+    box-shadow: 0 16px 34px rgba(22, 21, 19, 0.12);
+    padding: 1.5rem 1.5rem 1.25rem;
+    animation: research-sway 5s ease-in-out infinite alternate;
+    animation-delay: var(--delay);
+    transition: transform 0.3s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.3s ease;
+    transform-origin: top center;
+}
+
+.research__card:hover {
+    box-shadow: 0 22px 40px rgba(22, 21, 19, 0.18);
+}
+
+@keyframes research-sway {
+    from { transform: rotate(calc(var(--sway) * -1)); }
+    to   { transform: rotate(var(--sway)); }
+}
+
+/* paperclip glyph pinning the card to its own top edge */
+.research__clip {
+    position: absolute;
+    top: -14px;
+    left: 50%;
+    translate: -50% 0;
+    width: 22px;
+    height: 26px;
+    color: var(--ink);
+    opacity: 0.8;
+}
+
+.research__venue {
+    font-family: 'Short Stack', cursive;
+    font-size: 0.8rem;
+    opacity: 0.55;
+}
+
+.research__title {
+    font-family: 'Short Stack', cursive;
+    font-size: 1.25rem;
+    line-height: 1.3;
+    margin: 0.35rem 0 0.75rem;
+}
+
+.research__abstract-wrap {
+    position: relative;
+    overflow: hidden;
+    max-height: 4.8em;
+    transition: max-height 0.5s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.research__card.expanded .research__abstract-wrap {
+    max-height: 600px;
+}
+
+.research__abstract {
+    font-family: 'Short Stack', cursive;
+    font-size: 0.9rem;
+    line-height: 1.6;
+    opacity: 0.85;
+}
+
+.research__abstract-wrap::after {
+    content: '';
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    height: 1.6em;
+    background: linear-gradient(to bottom, transparent, var(--paper));
+    transition: opacity 0.3s ease;
+}
+
+.research__card.expanded .research__abstract-wrap::after {
+    opacity: 0;
+}
+
+.research__toggle {
+    font-family: 'Short Stack', cursive;
+    font-size: 0.8rem;
+    background: none;
+    border: none;
+    color: var(--ink);
+    opacity: 0.6;
+    cursor: pointer;
+    padding: 0.5rem 0 0;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+}
+
+.research__toggle:hover,
+.research__toggle:focus-visible {
+    opacity: 1;
+}
+
+.research__toggle-icon {
+    display: inline-flex;
+    transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.research__card.expanded .research__toggle-icon {
+    transform: rotate(180deg);
+}
+
+.research__tags {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.4rem;
+    margin: 1rem 0;
+}
+
+.research__tag {
+    font-family: 'Short Stack', cursive;
+    font-size: 0.72rem;
+    padding: 0.22rem 0.6rem;
+    border-radius: 999px;
+    border: 1px solid var(--ink);
+    opacity: 0.7;
+}
+
+.research__links {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+    margin-top: 0.75rem;
+}
+
+.research__link {
+    font-family: 'Short Stack', cursive;
+    font-size: 0.85rem;
+    font-weight: 600;
+    color: var(--ink);
+    text-decoration: none;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.4rem;
+    padding: 0.45rem 0.85rem;
+    border-radius: 999px;
+    border: 1.5px solid var(--ink);
+    transition: background 0.3s ease, color 0.3s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.research__link:hover,
+.research__link:focus-visible {
+    background: var(--ink);
+    color: var(--paper);
+    transform: translateY(-2px);
+}
+
+.research__link-icon {
+    display: inline-flex;
+    flex-shrink: 0;
+}
+
+/* ============================================================
+   MOBILE — string moves to the left edge, every card sits
+   on the same side of it
+   ============================================================ */
+@media (max-width: 900px) {
+    .research { padding: 0 1.5rem; }
+
+    .research__timeline::before {
+        left: 22px;
+    }
+
+    .research__entry:nth-child(odd),
+    .research__entry:nth-child(even) {
+        justify-content: flex-start;
+        padding-left: 56px;
+    }
+
+    .research__year-badge {
+        left: 22px;
+    }
+
+    .research__card {
+        width: 100%;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .research__entry,
+    .research__card,
+    .research__abstract-wrap,
+    .research__toggle-icon {
+        transition: none;
+        animation: none;
+    }
+    .research__entry { opacity: 1; transform: none; }
+}

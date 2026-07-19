@@ -1,0 +1,403 @@
+/* ─── Experience Section — Ink Timeline ───────────────────────── */
+
+#section-experience {
+  position: relative;
+  z-index: 2;
+  min-height: 100vh;
+  background: var(--paper);
+  overflow: hidden;
+}
+
+#experience {
+  position: relative;
+  z-index: 2;
+  background: var(--paper);
+  color: var(--ink);
+  min-height: 100vh;
+  border-top-left-radius: 48px;
+  border-top-right-radius: 48px;
+  overflow: hidden;
+}
+
+.experience {
+  max-width: 1100px;
+  margin: auto;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding: 6rem;
+}
+
+.experience__body {
+  width: 100%;
+  --accent-ochre: var(--ochre, #c98a2c);
+  --accent-moss: var(--moss, #4b6b4e);
+  --accent-clay: var(--clay, #b5563b);
+  --rail-idle: var(--line, rgba(22, 21, 19, 0.14));
+}
+
+.timeline {
+  margin-top: 3.5rem;
+}
+
+.timeline__list {
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Item grid: rail | date | card ────────────────────────────── */
+
+.tl-item {
+  --accent: var(--accent-ochre);
+  display: grid;
+  grid-template-columns: 40px minmax(120px, 160px) 1fr;
+  column-gap: 1.75rem;
+  position: relative;
+}
+
+.tl-item[data-accent="moss"] { --accent: var(--accent-moss); }
+.tl-item[data-accent="clay"] { --accent: var(--accent-clay); }
+
+.tl-item + .tl-item {
+  margin-top: 2.75rem;
+}
+
+/* ─── Rail: node + connecting ink line ─────────────────────────── */
+
+.tl-item__rail {
+  position: relative;
+  display: flex;
+  justify-content: center;
+}
+
+.tl-item__rail::before {
+  content: '';
+  position: absolute;
+  top: 30px;
+  bottom: -2.75rem;
+  left: 50%;
+  width: 2px;
+  transform: translateX(-50%);
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-size: 100% 0%;
+  background-position: top;
+  background-color: var(--rail-idle);
+  transition: background-size 1s cubic-bezier(.65, 0, .35, 1);
+}
+
+.tl-item.is-visible .tl-item__rail::before {
+  background-size: 100% 100%;
+}
+
+.tl-item:last-child .tl-item__rail::before {
+  display: none;
+}
+
+.tl-item__node {
+  width: 22px;
+  height: 22px;
+  border-radius: 58% 42% 53% 47% / 47% 53% 42% 58%;
+  background: var(--paper);
+  border: 2px solid var(--accent);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 2;
+  transform: scale(0.4);
+  opacity: 0;
+  transition: transform .5s cubic-bezier(.34, 1.56, .64, 1), opacity .4s ease,
+              border-radius .6s ease, box-shadow .35s ease;
+}
+
+.tl-item.is-visible .tl-item__node {
+  transform: scale(1);
+  opacity: 1;
+}
+
+.tl-item__node-core {
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: var(--accent);
+  transition: transform .4s ease;
+}
+
+.tl-item:hover .tl-item__node {
+  transform: scale(1.35);
+  border-radius: 40% 60% 46% 54% / 60% 45% 55% 40%;
+  box-shadow:
+    0 0 0 6px color-mix(in srgb, var(--accent) 16%, transparent),
+    0 0 0 14px color-mix(in srgb, var(--accent) 8%, transparent);
+}
+
+.tl-item:hover .tl-item__node-core {
+  transform: scale(1.4);
+}
+
+/* ─── Date: big newspaper masthead style ───────────────────────── */
+
+.tl-item__date {
+  padding-top: 0;
+  color: var(--ink);
+  font-family: 'Playfair Display', Georgia, 'Times New Roman', serif;
+  font-weight: 800;
+  font-style: italic;
+  font-size: 2.1rem;
+  line-height: 1;
+  letter-spacing: -0.01em;
+  position: relative;
+  transform: rotate(-3deg) translateY(2px);
+  opacity: 0;
+  transition: transform .5s cubic-bezier(.34, 1.56, .64, 1), opacity .5s ease;
+}
+
+.tl-item.is-visible .tl-item__date {
+  opacity: 1;
+  transform: rotate(-2deg) translateY(0);
+  transition-delay: .1s;
+}
+
+.tl-item:hover .tl-item__date {
+  color: var(--accent);
+}
+
+/* thin rule under the date, like a dateline */
+/* .tl-item__date::after {
+  content: '';
+  display: block;
+  width: 60%;
+  height: 2px;
+  background: currentColor;
+  opacity: .5;
+  margin-top: .3rem;
+} */
+
+/* ─── Card ──────────────────────────────────────────────────────── */
+
+.tl-item__card {
+  position: relative;
+  padding: 1.75rem 2rem;
+  border: 1px solid var(--line, rgba(22, 21, 19, 0.14));
+  border-radius: 18px;
+  background: rgba(255, 255, 255, .45);
+  overflow: hidden;
+  opacity: 0;
+  transform: translateY(14px);
+  transition: opacity .55s ease, transform .55s cubic-bezier(.22, 1, .36, 1),
+              box-shadow .3s ease, border-color .3s ease, min-height .3s ease;
+}
+
+.tl-item.is-visible .tl-item__card {
+  opacity: 1;
+  transform: translateY(0);
+  transition-delay: .05s;
+}
+
+.tl-item__accent-bar {
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 3px;
+  background: var(--accent);
+  transform: scaleY(0);
+  transform-origin: top center;
+  transition: transform .45s cubic-bezier(.65, 0, .35, 1);
+}
+
+.tl-item:hover .tl-item__card {
+  transform: translateY(-4px);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, .1);
+  border-color: color-mix(in srgb, var(--accent) 40%, var(--line, #ccc));
+}
+
+.tl-item:hover .tl-item__accent-bar {
+  transform: scaleY(1);
+}
+
+.tl-item__header {
+  margin-bottom: 1rem;
+}
+
+.tl-item__role {
+  margin: 0;
+  font-family: 'Short Stack', cursive;
+  font-size: 1.4rem;
+  display: inline;
+  background-image: linear-gradient(var(--accent), var(--accent));
+  background-repeat: no-repeat;
+  background-position: 0 100%;
+  background-size: 0% 2px;
+  transition: background-size .4s ease;
+  padding-bottom: 2px;
+}
+
+.tl-item:hover .tl-item__role {
+  background-size: 100% 2px;
+}
+
+.tl-item__org {
+  margin: .35rem 0 0;
+  font-family: 'Short Stack', cursive;
+  color: var(--moss, #4b6b4e);
+}
+
+/* ─── Brief line (always visible, collapses on hover) ──────────── */
+
+.tl-item__brief {
+  margin: 0;
+  font-family: 'Short Stack', cursive;
+  font-size: 1.05rem;
+  color: rgba(22, 21, 19, .6);
+  line-height: 1.6;
+  max-height: 3em;
+  overflow: hidden;
+  transition: opacity .3s ease, max-height .3s ease;
+}
+
+.tl-item:hover .tl-item__brief {
+  opacity: 0;
+  max-height: 0;
+}
+
+/* ─── Expandable details (summary + bullets + tags) ────────────── */
+
+.tl-item__details {
+  display: grid;
+  grid-template-rows: 0fr;
+  opacity: 0;
+  transition: grid-template-rows .45s cubic-bezier(.22, 1, .36, 1),
+              opacity .35s ease;
+}
+
+.tl-item__details > div {
+  overflow: hidden;
+  min-height: 0;
+}
+
+.tl-item:hover .tl-item__details {
+  grid-template-rows: 1fr;
+  opacity: 1;
+  transition: grid-template-rows .45s cubic-bezier(.22, 1, .36, 1) .05s,
+              opacity .4s ease .1s;
+}
+
+.tl-item__details .tl-item__summary {
+  font-family: 'Short Stack', cursive;
+  font-size: 1.05rem;
+  color: rgba(22, 21, 19, .75);
+  line-height: 1.7;
+  padding-top: .75rem;
+}
+
+.tl-item__details .tl-item__bullets {
+  margin: 1rem 0;
+  padding-left: 1.2rem;
+  font-family: 'Short Stack', cursive;
+  font-size: 1.05rem;
+}
+
+.tl-item__details .tl-item__bullets li {
+  margin-bottom: .6rem;
+  line-height: 1.6;
+}
+
+.tl-item__tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: .6rem;
+  margin-top: 1rem;
+}
+
+.tl-item__tag {
+  padding: .35rem .75rem;
+  border-radius: 999px;
+  background: var(--paper-dim, rgba(0, 0, 0, .04));
+  font-size: .85rem;
+  font-family: 'Short Stack', cursive;
+  transform: translateY(0);
+  transition: transform .3s cubic-bezier(.34, 1.56, .64, 1), background .3s ease, color .3s ease;
+}
+
+.tl-item:hover .tl-item__tag {
+  background: color-mix(in srgb, var(--accent) 14%, transparent);
+  color: var(--ink);
+}
+
+.tl-item:hover .tl-item__tag:nth-child(1) { transition-delay: 0s; transform: translateY(-3px); }
+.tl-item:hover .tl-item__tag:nth-child(2) { transition-delay: .04s; transform: translateY(-3px); }
+.tl-item:hover .tl-item__tag:nth-child(3) { transition-delay: .08s; transform: translateY(-3px); }
+.tl-item:hover .tl-item__tag:nth-child(4) { transition-delay: .12s; transform: translateY(-3px); }
+
+/* ─── Responsive ────────────────────────────────────────────────── */
+
+@media (max-width: 768px) {
+  .experience {
+    padding: 4rem 1.5rem;
+  }
+
+  .tl-item {
+    grid-template-columns: 28px 1fr;
+    row-gap: .5rem;
+  }
+
+  .tl-item__date {
+    grid-column: 2;
+    grid-row: 1;
+    font-size: 1.6rem;
+  }
+
+  .tl-item__card {
+    grid-column: 2;
+    grid-row: 2;
+    padding: 1.5rem;
+  }
+
+  .tl-item__rail::before {
+    top: 24px;
+    bottom: -2.75rem;
+  }
+
+  .tl-item__node {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+/* ─── Reduced motion ────────────────────────────────────────────── */
+
+@media (prefers-reduced-motion: reduce) {
+  .tl-item__node,
+  .tl-item__date,
+  .tl-item__card,
+  .tl-item__rail::before,
+  .tl-item__accent-bar,
+  .tl-item__role,
+  .tl-item__tag,
+  .tl-item__brief,
+  .tl-item__details {
+    transition: none !important;
+  }
+
+  .tl-item__node,
+  .tl-item__date,
+  .tl-item__card {
+    opacity: 1;
+    transform: none;
+  }
+
+  .tl-item__rail::before {
+    background-size: 100% 100%;
+  }
+
+  .tl-item__details {
+    grid-template-rows: 1fr;
+    opacity: 1;
+  }
+
+  .tl-item__brief {
+    display: none;
+  }
+}

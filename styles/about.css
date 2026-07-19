@@ -1,0 +1,265 @@
+#section-about {
+    position: relative;
+    z-index: 2;
+    min-height: 100vh;
+    background: var(--paper);
+}
+
+#about {
+    position: relative;
+    z-index: 2;
+    background: var(--paper);
+    color: var(--ink);
+    min-height: 100vh;
+    border-top-left-radius: 48px;
+    border-top-right-radius: 48px;
+    overflow: hidden;
+}
+
+.about {
+    max-width: 1300px;
+    margin: auto;
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    gap: 4rem;
+    padding: 6rem;
+}
+
+.about__portrait {
+    flex: 0 0 320px;
+    display: flex;
+    justify-content: center;
+    flex-direction:column;
+    align-items: center;
+}
+
+.about__portrait img {
+    width: min(100%, 320px);
+    height: auto;
+    max-height: 420px;
+    object-fit: cover;
+    object-position: center;
+    border-radius: 24px;
+    box-shadow: 0 20px 45px rgba(22, 21, 19, 0.14);
+}
+
+.about__body {
+    flex: 1;
+    min-width: 0;
+}
+
+@media (max-width: 900px) {
+    .about {
+        flex-direction: column;
+        gap: 2rem;
+        padding: 3rem 1.5rem;
+    }
+
+    .about__portrait {
+        flex-basis: auto;
+        width: 100%;
+    }
+
+    .about__portrait img {
+        width: min(100%, 260px);
+        max-height: 320px;
+    }
+}
+
+/* ============================================================
+   SCROLL REVEAL (two-way)
+   Class applied by scripts/about.js. The observer in that file
+   toggles .visible both on entry AND exit, so the section animates
+   back out when scrolled past instead of staying visible forever.
+   ============================================================ */
+#about.reveal {
+  position: relative;
+  z-index: 2;
+  opacity: 0;
+  transform: translateY(2.5vw);
+  transition: opacity 0.8s ease, transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+  will-change: opacity, transform;
+}
+
+#about.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #about.reveal {
+    opacity: 1;
+    transform: none;
+    transition: none;
+  }
+}
+
+/* ============================================================
+   LETTER-GLOW HOVER EFFECT
+   scripts/about.js wraps every letter of .section__heading and
+   .section__lede in a <span class="letter-span">. Letters within
+   ~60px of the cursor get .active applied.
+   ============================================================ */
+.word-span {
+  white-space: nowrap;
+  display: inline-block;
+}
+
+.letter-span {
+  display: inline-block;
+  transition: transform 0.2s ease, color 0.2s ease, text-shadow 0.2s ease;
+}
+
+.letter-span.active {
+  color: #cff8ff;
+  text-shadow: 0 0 0.52vw rgba(0, 230, 246, 0.7);
+  transform: scale(1.03);
+}
+
+/* ============================================================
+   RESUME BUTTON
+   Pill button in the paper/ink palette, yellow glow on hover.
+   ============================================================ */
+.resume-btn {
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 0.6rem;
+  margin-top: 1.75rem;
+  padding: 0.85rem 1.6rem;
+  border-radius: 999px;
+  border: 1.5px solid var(--ink);
+  background: var(--paper);
+  color: var(--ink);
+  font-weight: 600;
+  font-size: 0.95rem;
+  letter-spacing: 0.01em;
+  text-decoration: none;
+  cursor: pointer;
+  transition:
+    color 0.35s ease,
+    background 0.35s ease,
+    box-shadow 0.35s ease,
+    transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.resume-btn:hover,
+.resume-btn:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+  transform: translateY(-3px);
+  box-shadow:
+    0 14px 30px rgba(22, 21, 19, 0.18);
+}
+
+.resume-btn:active {
+  transform: translateY(-1px) scale(0.98);
+}
+
+.resume-btn__icon {
+  display: inline-flex;
+  transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.resume-btn:hover .resume-btn__icon {
+  transform: translateY(3px);
+  animation: resume-bounce 0.9s ease-in-out infinite;
+}
+
+@keyframes resume-bounce {
+  0%, 100% { transform: translateY(3px); }
+  50%      { transform: translateY(6px); }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .resume-btn,
+  .resume-btn__icon {
+    transition: none;
+    animation: none;
+  }
+}
+
+.section__lede,
+.resume-btn,
+.resume-btn__text {
+  font-family: 'Short Stack', cursive;
+  font-size: 1.2rem;
+}
+
+.expertise {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.6rem;
+    list-style: none;
+    margin: 1.5rem 0 0;
+    padding: 0;
+}
+
+.expertise__item {
+    font-family: 'Short Stack', cursive;
+    font-size: 0.9rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+    padding: 0.5rem 1.1rem;
+    border-radius: 999px;
+    border: 1.5px solid var(--ink);
+    color: var(--ink);
+    background: transparent;
+    transition: background 0.3s ease, color 0.3s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.expertise__item:hover {
+    background: var(--ink);
+    color: var(--paper);
+    transform: translateY(-2px);
+}
+
+@media (max-width: 900px) {
+    .expertise {
+        gap: 0.5rem;
+    }
+
+    .expertise__item {
+        font-size: 0.85rem;
+        padding: 0.45rem 0.9rem;
+    }
+}
+
+.social-icons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.social-icons__link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: 1.5px solid var(--ink);
+  color: var(--ink);
+  background: transparent;
+  transition: background 0.3s ease, color 0.3s ease, transform 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.social-icons__link:hover,
+.social-icons__link:focus-visible {
+  background: var(--ink);
+  color: var(--paper);
+  transform: translateY(-3px);
+}
+
+@media (max-width: 900px) {
+  .social-icons {
+    gap: 0.7rem;
+    margin-bottom: 1rem;
+  }
+
+  .social-icons__link {
+    width: 36px;
+    height: 36px;
+  }
+}

@@ -1,0 +1,50 @@
+/* floating-icons.css
+   Subtle floating musical-instrument SVG background layer.
+   Include this in sections where you want the effect (not gallery/sideb).
+*/
+
+.floating-icons-layer {
+  position: absolute;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none; /* layer itself never blocks clicks/scroll */
+  z-index: 0;
+}
+
+/* Outer wrapper: JS moves this for the mouse-parallax effect */
+.floating-icon {
+  position: absolute;
+  will-change: transform;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Inner image: CSS handles the constant gentle float/rotate loop */
+.floating-icon-img {
+  display: block;
+  width: var(--size, 48px);
+  height: auto;
+  opacity: var(--opacity, 0.08);
+  filter: grayscale(1) brightness(1.6);
+  animation: floatIcon var(--duration, 8s) ease-in-out infinite;
+  animation-delay: var(--delay, 0s);
+  transition: opacity 0.4s ease, filter 0.4s ease;
+}
+
+@keyframes floatIcon {
+  0%   { transform: translateY(0px) rotate(0deg); }
+  50%  { transform: translateY(-14px) rotate(6deg); }
+  100% { transform: translateY(0px) rotate(0deg); }
+}
+
+/* Optional: make icons perk up slightly when the section itself is hovered */
+[data-floating-icons]:hover .floating-icon-img {
+  opacity: calc(var(--opacity, 0.08) + 0.04);
+}
+
+/* Make sure the section content stays above the icon layer.
+   If your section content isn't already positioned, this z-index
+   only works alongside position:relative/absolute on it. */
+:where([data-floating-icons] > *:not(.floating-icons-layer)) {
+  position: relative;
+  z-index: 1;
+}

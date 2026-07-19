@@ -1,0 +1,86 @@
+#projects {
+    position: relative;
+    z-index: 2;
+    height: 430vh;
+    overflow: clip;
+    background: var(--paper);
+    color: var(--ink);
+}
+.projects {
+    position: sticky;
+    top: 0;
+    height: 100vh;
+    height: 100svh;
+    display: flex;
+    flex-direction: column;
+    padding-top: clamp(3.5rem, 8vh, 6rem);
+    overflow: hidden;
+}
+.projects__header { width: min(1100px, 100%); margin: 0 auto 1.25rem; padding: 0 6rem; }
+.projects__hint { margin-top: 0.25rem; opacity: 0.65; }
+.projects__viewport { position: relative; flex: 1; min-height: 0; overflow: hidden; }
+.projects__viewport::after {
+    content: '';
+    position: absolute;
+    z-index: 2;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: clamp(3rem, 10vh, 6rem);
+    pointer-events: none;
+    background: linear-gradient(to bottom, rgba(247, 244, 236, 0), var(--paper));
+}
+.projects__rail {
+    display: flex;
+    width: max-content;
+    height: 100%;
+    gap: clamp(1.25rem, 3vw, 2.5rem);
+    padding: 1.4rem max(1.5rem, calc((100vw - 1100px) / 2)) 2.4rem;
+    will-change: transform;
+}
+
+.projects__card {
+    --tilt: 0deg;
+    flex: 0 0 clamp(15.5rem, 25vw, 19rem);
+    min-height: 23rem;
+    align-self: flex-start;
+    position: relative;
+    padding: 1.6rem 1.6rem 1.35rem;
+    display: flex;
+    flex-direction: column;
+    border: 1.5px dashed var(--ink);
+    border-radius: 14px;
+    background: var(--paper);
+    box-shadow: 0 16px 34px rgba(22, 21, 19, 0.12);
+    animation: projects-sway var(--sway-duration, 5.5s) ease-in-out infinite alternate;
+    transition: box-shadow 250ms ease;
+}
+.projects__card:hover { animation-play-state: paused; transform: rotate(0deg) translateY(-5px); box-shadow: 0 22px 40px rgba(22, 21, 19, 0.18); }
+@keyframes projects-sway {
+    from { transform: rotate(calc(var(--tilt) * -1)) translateY(0); }
+    to { transform: rotate(var(--tilt)) translateY(-6px); }
+}
+.projects__clip { position: absolute; top: -14px; left: 50%; translate: -50% 0; width: 22px; color: var(--ink); opacity: 0.8; }
+.projects__meta { font: 0.76rem/1.3 'Short Stack', cursive; opacity: 0.55; }
+.projects__title { margin: 0.5rem 0 0.8rem; font: 400 1.4rem/1.25 'Short Stack', cursive; }
+.projects__description { margin: 0; font: 0.93rem/1.6 'Short Stack', cursive; opacity: 0.86; }
+.projects__tags { display: flex; flex-wrap: wrap; gap: 0.4rem; margin: auto 0 1rem; padding-top: 1.4rem; }
+.projects__tag { padding: 0.22rem 0.6rem; border: 1px solid var(--ink); border-radius: 999px; font: 0.72rem 'Short Stack', cursive; opacity: 0.72; }
+.projects__links { display: flex; flex-wrap: wrap; gap: 0.5rem; }
+.projects__link { display: inline-flex; align-items: center; gap: 0.4rem; padding: 0.48rem 0.85rem; border: 1.5px solid var(--ink); border-radius: 999px; color: var(--ink); font: 600 0.82rem 'Short Stack', cursive; text-decoration: none; transition: background 180ms ease, color 180ms ease, transform 180ms ease; }
+.projects__link:hover, .projects__link:focus-visible { background: var(--ink); color: var(--paper); transform: translateY(-2px); outline: none; }
+.projects__card--research { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+.projects__card--research .projects__clip { color: var(--paper); }
+.projects__card--research .projects__tag { border-color: var(--paper); }
+.projects__card--research .projects__link { color: var(--paper); border-color: var(--paper); }
+.projects__card--research .projects__link:hover, .projects__card--research .projects__link:focus-visible { background: var(--paper); color: var(--ink); }
+
+@media (max-width: 900px) { .projects__header { padding: 0 1.5rem; } }
+@media (max-width: 620px) { .projects__card { flex-basis: min(76vw, 18rem); min-height: 22rem; } }
+@media (prefers-reduced-motion: reduce) {
+    #projects { height: auto; }
+    .projects { position: relative; height: auto; padding-bottom: 3rem; }
+    .projects__viewport { overflow-x: auto; }
+    .projects__rail { width: max-content; transform: none !important; }
+    .projects__card { animation: none; transition: none; }
+}

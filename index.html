@@ -1,0 +1,106 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Yashas' Portfolio</title>
+    <!-- Favicon -->
+  <link rel="icon" type="image/png" href="assets/fav.png">
+
+  <!-- p5.js -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/p5.js/1.9.2/p5.js"></script>
+
+
+  <!-- Fonts -->
+   
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet"
+        href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+  <link href="https://fonts.googleapis.com/css2?family=Short+Stack&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+  
+  <!-- Styles — one per section -->
+  <link rel="stylesheet" href="styles/base.css" />
+  <link rel="stylesheet" href="styles/hero.css" />
+  <link rel="stylesheet" href="styles/about.css" />
+  <link rel="stylesheet" href="styles/experience.css" />
+  <link rel="stylesheet" href="styles/projects.css">
+  <link rel="stylesheet" href="styles/sideb.css">
+  <link rel="stylesheet" href="styles/extras.css">
+  <link rel="stylesheet" href="styles/contact.css" />
+  <link rel="stylesheet" href="styles/floating-icons.css">
+
+  <link rel="stylesheet" href="styles/sidenav.css" />
+</head>
+
+<body class="is-loading">
+  <div class="site-loader" role="status" aria-live="polite" aria-label="Loading portfolio">
+    <div class="site-loader__mark" aria-hidden="true">YS</div>
+    <div class="site-loader__copy">
+      <p>Yashas Shetty</p>
+      <div class="site-loader__track" aria-hidden="true"><span></span></div>
+      <span>Loading portfolio</span>
+    </div>
+  </div>
+
+  <!-- ── Hero ── -->
+  <header class="hero" id="top">
+    <div id="marble-canvas" aria-hidden="true"></div>
+    <div class="hero__glow" aria-hidden="true"></div>
+    <div class="hero__scrim" aria-hidden="true"></div>
+
+    <div class="hero__name">
+      <h1><span>Yashas</span><span>Shetty</span></h1>
+    </div>
+
+  </header>
+
+  <!-- ── Nav (injected by loader) ── -->
+  <div id="nav-placeholder"></div>
+
+  <!-- ── Main content — each div becomes a section ── -->
+  <main id="main">
+    <div id="section-about"></div>
+    <div id="section-experience"></div>
+    <div id="section-projects"></div>
+    <div id="section-sideb"></div>
+    <div id="section-extras"></div>
+    <div id="section-contact"></div>
+  </main>
+
+  <footer>
+    <span>Yashas Shetty</span>
+    <div class="footer__center">
+      <span>Last updated on 19th July 2026</span>
+      <button type="button" class="footer__back-to-top" aria-controls="top">Back to top</button>
+    </div>
+    <span>© Yashas Shetty · Built with p5.js</span>
+  </footer>
+
+  <!-- Scripts -->
+  <script src="scripts/loader.js"></script>
+  <script src="scripts/marble.js"></script>
+  <script src="scripts/transition.js"></script>
+  <script src="scripts/main.js"></script>
+  <script src="scripts/sidenav.js" defer></script>
+  <script src="https://cdn.jsdelivr.net/npm/roughjs@4/bundled/rough.js" defer></script> 
+  <script src="scripts/floating-icons.js" defer></script>
+
+
+
+  <script src="scripts/about.js"></script>
+  <script src="scripts/experience.js" defer></script>
+  <script src="scripts/projects.js" defer></script>
+  <script src="scripts/sideb.js" defer></script>
+  <script src="scripts/extras.js" defer></script>
+  <script src="scripts/contact.js" defer></script>  
+
+
+</body>
+</html>
+
+<!-- LOADING SCREEN -->
+<!-- [index.html (line 35)](F:\\BACKUPPORTFOLIO\\index.html:35) — loader markup and initial loading state
+[styles/base.css (line 42)](F:\\BACKUPPORTFOLIO\\styles\\base.css:42) — loader visuals, animation, and reduced-motion support
+[scripts/loader.js (line 40)](F:\\BACKUPPORTFOLIO\\scripts\\loader.js:40) — waits for page assets, then dismisses the loader -->
